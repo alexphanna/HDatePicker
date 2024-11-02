@@ -5,12 +5,19 @@
 //  Created by alex on 11/2/24.
 //
 
+import Foundation
 import SwiftUI
 
 public struct HDatePicker: View {
     @State var selectedDate: Date = .now
     @State var accentColor: Color
     var calendar = Calendar.current
+    
+    public init(accentColor: Color) {
+        self.selectedDate = .now
+        self.accentColor = accentColor
+        self.calendar = Calendar.current
+    }
     
     public var body: some View {
         VStack(spacing: 3) {
