@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 
 public struct HDatePicker: View {
-    @State var selectedDate: Date = .now
+    @Binding var selectedDate: Date
     @State var accentColor: Color
     var calendar = Calendar.current
     
-    public init(accentColor: Color) {
-        self.selectedDate = .now
+    public init(accentColor: Color, selectedDate: Binding<Date>) {
+        self._selectedDate = selectedDate
         self.accentColor = accentColor
         self.calendar = Calendar.current
     }

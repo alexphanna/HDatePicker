@@ -15,7 +15,7 @@ struct ContentView: View {
     @State var selectedDate: Date = .now
 
     var body: some View {
-        HDatePicker(accentColor: Color.red, selectedDate: selectedDate)
+        HDatePicker(accentColor: Color.red, selectedDate: $selectedDate)
     }
 }
 ```
