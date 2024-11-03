@@ -20,7 +20,7 @@ public struct HDatePicker: View {
     }
     
     public var body: some View {
-        VStack(spacing: 3) {
+        VStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(fetchDates(), id: \.self) { date in
@@ -53,6 +53,7 @@ public struct HDatePicker: View {
                 .padding(.horizontal, 12)
             }
             Text(String(selectedDate.formatted(date: .complete, time: .omitted)))
+            Divider()
         }
     }
     
