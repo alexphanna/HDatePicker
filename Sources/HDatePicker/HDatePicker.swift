@@ -41,8 +41,7 @@ public struct HDatePicker: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(height: 40)
         }
-        .frame(height: 80)
+        .frame(height: 70)
     }
 }

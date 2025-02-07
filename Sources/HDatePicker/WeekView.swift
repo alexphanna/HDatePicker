@@ -54,8 +54,13 @@ public struct WeekView: View {
                         .frame(width: 35)
                     Text(day.formatted(.dateTime.day()))
                         .frame(maxWidth: .infinity)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(isSelected ? (calendar.isDateInToday(day) ? Color(UIColor.label) : Color(UIColor.systemBackground)) : (calendar.isDateInToday(day) ? .accentColor : Color(UIColor.label)))
+                        .font(.body)
+                        .foregroundStyle(
+                            isSelected ?
+                              (calendar.isDateInToday(day) ? Color(UIColor.label) : Color(UIColor.systemBackground))
+                            : (calendar.isDateInWeekend(day) ? (calendar.isDateInToday(day) ? .accentColor : .gray)
+                            : (calendar.isDateInToday(day) ? .accentColor : Color(UIColor.label)))
+                        )
                 }
             }
         }
