@@ -15,13 +15,14 @@ public struct HDatePicker: View {
     private var calendar = Calendar.current
     
     public init(selectedDay: Binding<Date>) {
-        sunday = calendar.date(bySetting: .weekday, value: 1, of: .now)!
-        selectedWeek = -1
+        sunday = calendar.date(byAdding: .day, value: 1 - calendar.component(.weekday, from: .now), to: .now)!
+        selectedWeek = 0
         _selectedDay = selectedDay
+        print(sunday)
     }
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Spacer()
                 ForEach(["S", "M", "T", "W", "T", "F", "S"], id: \.self) { weekday in

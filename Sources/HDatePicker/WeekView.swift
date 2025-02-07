@@ -18,7 +18,6 @@ public struct WeekView: View {
             ForEach(getWeek(), id: \.self) { day in
                 DayView(day: day, selectedDay: $selectedDay)
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 4)
                     .onTapGesture {
                         if !calendar.isDate(selectedDay, inSameDayAs: day) {
                             withAnimation {
@@ -56,7 +55,7 @@ public struct WeekView: View {
                     Text(day.formatted(.dateTime.day()))
                         .frame(maxWidth: .infinity)
                         .fontWeight(.semibold)
-                        .foregroundStyle(isSelected ? Color(UIColor.systemBackground) : (calendar.isDateInToday(day) ? .accentColor : Color(UIColor.label)))
+                        .foregroundStyle(isSelected ? (calendar.isDateInToday(day) ? Color(UIColor.label) : Color(UIColor.systemBackground)) : (calendar.isDateInToday(day) ? .accentColor : Color(UIColor.label)))
                 }
             }
         }
