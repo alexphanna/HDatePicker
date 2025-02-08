@@ -13,6 +13,8 @@ public struct HDatePicker: View {
     @State var selectedWeek: Int
     @Binding var selectedDay: Date
     private var calendar = Calendar.current
+    @State private var minWeek = -8;
+    @State private var maxWeek = 8;
     
     public init(selectedDay: Binding<Date>) {
         sunday = calendar.date(byAdding: .day, value: 1 - calendar.component(.weekday, from: .now), to: .now)!
@@ -35,12 +37,18 @@ public struct HDatePicker: View {
                 }
             }
             TabView(selection: $selectedWeek) {
-                ForEach((-7...7), id: \.self) { i in
+                ForEach(minWeek...maxWeek, id: \.self) { i in
                     WeekView(sunday: Calendar.current.date(byAdding: .day, value: 7 * i, to: sunday)!, selectedDay: $selectedDay)
                         .tag(i)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .onChange(of: selectedWeek) {
+                if (selectedWeek % 4 == 0) {
+                    minWeek = selectedWeek - 8;
+                    maxWeek = selectedWeek + 8;
+                }
+            }
         }
         .frame(height: 70)
     }
