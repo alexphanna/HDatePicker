@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct WeekView: View {
-    @State var sunday: Date
+    @Binding var sunday: Date
     @Binding var selectedDay: Date
     var calendar = Calendar.current
     

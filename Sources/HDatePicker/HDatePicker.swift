@@ -13,14 +13,16 @@ public struct HDatePicker: View {
     @State var selectedWeek: Int
     @Binding var selectedDay: Date
     private var calendar = Calendar.current
-    @State private var minWeek = -8;
-    @State private var maxWeek = 8;
+    @State private var currentTab = 0
+    @State var prevSunday: Date
+    @State var nextSunday: Date
     
     public init(selectedDay: Binding<Date>) {
         sunday = calendar.date(byAdding: .day, value: 1 - calendar.component(.weekday, from: .now), to: .now)!
         selectedWeek = 0
         _selectedDay = selectedDay
-        print(sunday)
+        prevSunday = calendar.date(byAdding: .day, value: 1 - calendar.component(.weekday, from: .now) - 7, to: .now)!
+        nextSunday = calendar.date(byAdding: .day, value: 1 - calendar.component(.weekday, from: .now) + 7, to: .now)!
     }
     
     public var body: some View {
@@ -36,19 +38,22 @@ public struct HDatePicker: View {
                     Spacer()
                 }
             }
-            TabView(selection: $selectedWeek) {
-                ForEach(minWeek...maxWeek, id: \.self) { i in
-                    WeekView(sunday: Calendar.current.date(byAdding: .day, value: 7 * i, to: sunday)!, selectedDay: $selectedDay)
-                        .tag(i)
-                }
+            TabView(selection: $currentTab) {
+                WeekView(sunday: $prevSunday, selectedDay: $selectedDay)
+                    .tag(-1)
+                WeekView(sunday: $sunday, selectedDay: $selectedDay)
+                    .onDisappear() {
+                        sunday = currentTab < 0 ? prevSunday : nextSunday
+                        currentTab = 0;
+                        prevSunday = calendar.date(byAdding: .day, value: -7, to: sunday)!
+                        nextSunday = calendar.date(byAdding: .day, value: 7, to: sunday)!
+                    }
+                    .tag(0)
+                WeekView(sunday: $nextSunday, selectedDay: $selectedDay)
+                    .tag(1)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .onChange(of: selectedWeek) {
-                if (selectedWeek % 4 == 0) {
-                    minWeek = selectedWeek - 8;
-                    maxWeek = selectedWeek + 8;
-                }
-            }
+            //.disabled(currentTab != 0)
         }
         .frame(height: 70)
     }
