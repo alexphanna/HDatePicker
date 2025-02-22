@@ -48,7 +48,6 @@ public struct HDatePicker: View {
                             currentTab = 0;
                             prevSunday = calendar.date(byAdding: .day, value: -7, to: sunday)!
                             nextSunday = calendar.date(byAdding: .day, value: 7, to: sunday)!
-                            print("It's happening!")
                         }
                     }
                     .tag(0)
