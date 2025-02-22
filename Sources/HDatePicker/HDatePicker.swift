@@ -43,10 +43,13 @@ public struct HDatePicker: View {
                     .tag(-1)
                 WeekView(sunday: $sunday, selectedDay: $selectedDay)
                     .onDisappear() {
-                        sunday = currentTab < 0 ? prevSunday : nextSunday
-                        currentTab = 0;
-                        prevSunday = calendar.date(byAdding: .day, value: -7, to: sunday)!
-                        nextSunday = calendar.date(byAdding: .day, value: 7, to: sunday)!
+                        if currentTab != 0 {
+                            sunday = currentTab < 0 ? prevSunday : nextSunday
+                            currentTab = 0;
+                            prevSunday = calendar.date(byAdding: .day, value: -7, to: sunday)!
+                            nextSunday = calendar.date(byAdding: .day, value: 7, to: sunday)!
+                            print("It's happening!")
+                        }
                     }
                     .tag(0)
                 WeekView(sunday: $nextSunday, selectedDay: $selectedDay)
